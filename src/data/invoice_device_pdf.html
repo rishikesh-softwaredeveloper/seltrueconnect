@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+    <title><?= lang('invoice') ?></title>
+    <head>
+    <style type="text/css">
+        font-face {
+            font-family: "Source Sans Pro", sans-serif;
+        }
+     
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        a {
+            color: #0087C3;
+            text-decoration: none;
+        }
+
+        body {
+            color: #555555;
+            background: #FFFFFF;
+            font-size: 9px;
+            font-family: "Source Sans Pro", sans-serif; 
+            width: 100%;
+            margin:0;
+        }
+
+        #header_logo{
+            float:left;
+        }
+        #header_title{
+            float:right;
+        }
+       
+        #client_address p{
+            margin:0;
+        }
+        #ship_to p{
+            margin:0;
+        }
+      
+                   
+        #client_detail_table td {
+            width:110px;
+            border-bottom: 0.5px solid grey;
+            text-align: left;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+         .left {text-align:left;}
+         .right {text-align:right !important;}
+         .center {text-align:center;}
+
+        #invoice_table{ 
+            width:100%;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+       
+        #invoice_table th, td, tr {
+            border-bottom: 0.5px solid grey;
+            padding-top: 4px;
+            padding-bottom: 2px;
+            margin: 0;
+            }
+        #invoice_table .footer_table{
+                font-weight:bold;
+        }
+        #invoice_table th{
+            border-top: 0.5px solid grey;
+        }
+
+        header {
+                position: fixed;
+                top: -20px;
+                left: 0px;
+                right: 0px;
+                height: 20px; 
+                width: 100%;
+
+            }
+
+            footer {
+                position: fixed; 
+                bottom: 0; 
+                left: 0px; 
+                right: 0px;
+                height: 20px; 
+                border-top: 1px solid #AAAAAA;
+                color: #777777;
+                width: 100%;
+                padding: 8px 0;
+                text-align: center;
+            }
+
+        .rupee::before{
+            padding-left:5px;
+            white-space:nowrap;
+        }
+
+        
+        .footer_margin{
+            margin-bottom: 0;
+            margin-left : 1px;
+            position: absolute;
+            bottom: 0;
+            float:right;
+            font-size:12px;
+        }
+        .signature{
+            margin-bottom: 40px;
+            margin-left : 1px;
+            position: absolute;
+            bottom: 0;
+            float:right;
+            font-size:12px;
+        }
+        .container td{
+            border-bottom:none;
+        }
+
+    </style>
+    </head>
+    <body>
+    <header>
+           
+        </header>
+
+    <footer id="footer"><span style="font-weight:bold;">SLOYD VENTURES (P) LTD,</span> 1-11-251/19A. 4th Floor, Jayalakshmi Towers, 
+    Motilal Nehru Nagar, Begumpet, Hyderabad, Telangana, 500016, IN.<p style="margin:0;">|| CIN: U52390TG2012PTC083950 | PAN: AASCS2801C | Tel: +91-40-27900059 | Email: accounts@ynew.in | web: www.ynew.in ||</p>
+</footer>
+   <table id="heading" style="text-align:center;width:100%;border-bottom:none;margin-top:-30px;">
+            <tr style="border-bottom:none;"><td style="align-content:left;text-align:left;border-bottom:none;"><img src="<?php base_url();?>assets/img/logo_invoice.png" height="125px" width="125px"></td>
+          
+            <td  style="text-align:left;border-bottom:none;"><h1>Device List</h1></td>
+            
+            <td style="border-bottom:none;text-align:left;">
+                <div style="text-align:right;">
+                <table id="client_detail_table2" style="width: 210px;">
+                    <tr>
+                        <td class="left" style="text-align: left;">Customer Name</td>
+                        <td class="left"><?=$company?></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Invoice Number</td>
+                        <td class="left"><?=$invoice_code?></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Invoice Date</td>
+                        <td class="left"><?=$date?></td>
+                    </tr>
+                    
+                </table>
+            
+                </div></td></tr>
+        </table>
+        <table class="container" style="width:100%;">
+        <tr><td  style="width:30%;vertical-align:top;">
+            
+            
+                </td></tr>
+            </table>
+    
+        <div id="invoice_div">
+            <table id="invoice_table" style="width:100%;" cellspacing="0">
+                <thead style="text-align: center;font-size:9px;">
+                <tr>
+                    
+                    <th style="text-align:left;white-space:nowrap;">Product Name</th>
+                    <th style="white-space:nowrap;text-align:left">SKU</th>
+
+                    <th style="text-align:left;">IMEI No</th>
+                    <th style="text-align:left;">Category</th>
+                    <th style="text-align:left;">Device Id</th>
+                    
+                    <?php if($no_grade != 'yes'){ ?>
+                        <th style="text-align:left;">Grade</th>
+                    <?php } ?>
+                    
+                    <th style="width: 10px;">Qty</th>
+                    <th class="right">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if(!empty($rows)){
+                        $total_units = 0;
+                        $total_taxable = 0;
+                        $total_exempt = 0;
+                        foreach($rows as $rowValue){
+
+                            $tax_type=$rowValue['tax_type'];
+                           
+                            if($rowValue['category']=='OPEN BOX' || $rowValue['category']=='DEMO'){
+                                $category = ucwords(strtolower($rowValue['category']));
+                                $taxable = $rowValue['price']/1.18;
+                                $exempt = "0.00";
+                            }else{
+                                $category = 'Pre-owned';
+                                $taxable = ($rowValue['price']-($rowValue['unit_price']+$rowValue['unit_price_tax']))/1.18;
+                                $exempt = $rowValue['unit_price']+$rowValue['unit_price_tax'];
+                                
+                                if($exempt > $rowValue['price']){
+                                    $exempt = $rowValue['price'];
+                                    $taxable = 0;
+                                }
+                            }
+                           
+                            $total_exempt += $exempt;
+                            $total_taxable += $taxable;
+                            $productname = ucwords(strtolower($rowValue['product_name']));
+                            $total_units++;
+                            
+                            ?>
+                            <tr class="bottom-border">
+                            <td style="padding-left:1px;"><?=$productname?></td>
+                            <td style="white-space:nowrap;"><?=$rowValue['sku']?></td>   
+
+                            <td><?=$rowValue['imei']?></td>
+                            <td style="padding-left:1px;"><?=$category?></td>                         
+                            <td style="text-align:left;"><?=$rowValue['deviceid']?></td>
+                            
+                            <?php if($no_grade != 'yes'){ ?>
+                                <td style="text-align:left;"><?=(($rowValue['grade']=='UNCERTIFIED')?'UC':$rowValue['grade'])?></td>
+                            <?php } ?>
+                            
+                            <td style="text-align:center;">1</td>
+                            <td style="text-align:right;"><span class="right rupee"><?=IND_money_format($rowValue['price'])?></span></td>
+                            </tr>
+                            
+                    <?php  }
+                    } ?>
+                   
+                </tbody>
+                <tfoot class="footer_table">
+                    
+                    <tr style="line-height:15px;">
+                        
+                        <?php if($no_grade == 'yes'){ ?>
+                            <td colspan="5" >Total</td>
+                        <?php }else{ ?>
+                            <td colspan="6" >Total</td>
+                        <?php } ?>
+                        
+                        <td class="right rupee" style="padding-bottom:2px;padding-top:2px;"><?=$total_units?></td>
+                        <td class="right" style="padding-bottom:2px;padding-top:2px;"><span class="rupee"><?=IND_money_format($amount)?><span></td>
+                    </tr>
+            </table>
+        </div>
+            
+        <div class="signature">
+        </div>
+        </body>
+</html>
+
+<?php
+    function IND_money_format($number){	
+        $decimal = (string)($number - floor($number));
+        $money = floor($number);
+        $length = strlen($money);
+        $delimiter = '';
+        $money = strrev($money);
+ 
+        for($i=0;$i<$length;$i++){
+            if(( $i==3 || ($i>3 && ($i-1)%2==0) )&& $i!=$length){
+                $delimiter .=',';
+            }
+            $delimiter .=$money[$i];
+        }
+ 
+        $result = strrev($delimiter);
+        $decimal = preg_replace("/0\./i", ".", $decimal);
+        $decimal = substr($decimal, 0, 3);
+ 
+        if( $decimal != '0'){
+            $result = $result.$decimal;
+        }
+        if($decimal=="0"){
+            $result = $result.'.00';
+        }
+ 
+        return $result;
+    }
+?>
