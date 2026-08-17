@@ -10,8 +10,8 @@ const ENV = {
     userName:"U2xveWQtRGVhbGVyLUFwcA==",
     passWord:"QXBwLVNsb3lkLURlYWxlcg==",
     razorpay_key:"rzp_test_JTqO73TKg7BfXj",// Your api key nagireddy
-    build_no:37,
-    version:"1.2.10"
+    build_no:38,
+    version:"1.2.11"
   },
 
   staging: {
@@ -21,8 +21,8 @@ const ENV = {
     passWord:"QXBwLVNsb3lkLURlYWxlcg==",
     // razorpay_key:"rzp_test_JTqO73TKg7BfXj",//Your api key sloyd  
     razorpay_key:"rzp_live_Vsj38zwNbmuE7B",//Your api key sloyd  
-    build_no:37,
-    version:"1.2.10"
+    build_no:38,
+    version:"1.2.11"
   },
   
   prod: {
@@ -31,8 +31,8 @@ const ENV = {
     userName:"U2xveWQtRGVhbGVyLUFwcA==",
     passWord:"QXBwLVNsb3lkLURlYWxlcg==",
     razorpay_key:"rzp_live_Vsj38zwNbmuE7B",// Your api key sloyd
-    build_no:37,
-    version:"1.2.10"
+    build_no:38,
+    version:"1.2.11"
   }
 };
 

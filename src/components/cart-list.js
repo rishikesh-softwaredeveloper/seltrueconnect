@@ -18,15 +18,18 @@ const CartList = (item) => {
     const { 
         removeItem,
         removeOpenBoxItem,
+        removeNewDevicesItem,
         removeQnty,
         removePrice,
         clearDiscount,
         initDiscount,
         clearBundle,
         clearOpenBox,
+        clearNewDevices,
         clearSeltrueBox,
         initBundle,
         initOpenBox,
+        initNewDevices,
         initSeltrueBox,
         clearSearchCategory,
         clearSearchType,
@@ -113,10 +116,16 @@ const CartList = (item) => {
                 
                 if(Response.status == 1){
                     clearOpenBox();
+                    clearNewDevices();
                     clearSeltrueBox();
                     GetDeviceListStockType({"stock_type": "OPEN BOX","vendor_id":dealer[0].vendor_id },token).then((Res) => {
                         if (Res['status'] == 1) {
                             initOpenBox(Res.data);
+                        }
+                    });
+                    GetDeviceListStockType({"stock_type": "NEW","vendor_id":dealer[0].vendor_id },token).then((Res) => {
+                        if (Res['status'] == 1) {
+                            initNewDevices(Res.data);
                         }
                     });
                     GetDeviceListStockType({"stock_type": "PREXO","vendor_id":dealer[0].vendor_id },token).then((Res) => {

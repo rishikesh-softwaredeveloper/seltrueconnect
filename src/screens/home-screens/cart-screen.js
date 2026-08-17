@@ -61,16 +61,20 @@ const CartScreen = () => {
         clearPurchaseOrder,
         // clearSoldOrder,
         clearOpenBox,
+        clearNewDevices,
         clearSeltrueBox,
         clearMasterOpenBox,
+        clearMasterNewDevices,
         clearMasterSeltrueBox,
         clearBrands,
         clearGrades,
         initBrands,
         initGrades,
         initOpenBox,
+        initNewDevices,
         initSeltrueBox,
         initMasterOpenBox,
+        initMasterNewDevices,
         initMasterSeltrueBox,
         initOrder,
         initPurchaseOrder,
@@ -232,6 +236,21 @@ const CartScreen = () => {
               }
             })
             
+            GetDeviceListStockType({"stock_type":"NEW","vendor_id":dealer[0].vendor_id},token).then((Res2)=>{
+              clearNewDevices()
+              clearMasterNewDevices()
+              if(Res2.status == 1){
+                clearBrands()
+                clearGrades()
+                for(var i=0;i<Res2['data'].length;i++){
+                  initBrands(Res2['data'][i]['product_brand'])
+                  initGrades(Res2['data'][i]['certification_grade'])
+                }
+                initNewDevices((Res2.data).sort((a,b)=>a.device_id.localeCompare(b.device_id)))
+                initMasterNewDevices((Res2.data).sort((a,b)=>a.device_id.localeCompare(b.device_id)))
+              }
+            })
+
             GetDeviceListStockType({"stock_type":"OPEN BOX","vendor_id":dealer[0].vendor_id},token).then((Res2)=>{
               clearOpenBox()
               clearMasterOpenBox()
@@ -285,6 +304,7 @@ const CartScreen = () => {
         const bundleItems=[];
         const spstbundles =[];
         const openboxItems=[];
+        const newDevicesItems=[];
         const seltrueboxItems=[];
         const orderData = [];
         const bundleIds=[];
@@ -333,6 +353,15 @@ const CartScreen = () => {
                 stock_type = 'openbox';
             }
             seltrueboxItems.push(prexoDevices);
+        }else if(cartlist[i].stock_type == 'NEW'){
+            const newDevices ={
+            "grnreport_id": cartlist[i].grnreport_id
+            }
+            deviceQty= deviceQty + 1;
+            deviceAmount = deviceAmount + cartlist[i]['amount'];
+            stock_type = cartlist[i]['stock_type'];
+            
+            newDevicesItems.push(newDevices);
         }
         }
 

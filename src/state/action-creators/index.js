@@ -278,6 +278,57 @@ export const clearMasterOpenBox = () =>{
 }
 //master openbox end
 
+//new devices start
+export const initNewDevices = (add) =>{
+    return (dispatch) =>{
+        dispatch({
+            type:'init_newdevices',
+            payload:add
+        })
+    }
+}
+
+
+export const addNewDevices = (add) =>{
+    return (dispatch) =>{
+        dispatch({
+            type:'add_newdevices',
+            payload:add
+        })
+    }
+}
+
+
+
+export const clearNewDevices = () =>{
+    return (dispatch) =>{
+        dispatch({
+            type:'clear_newdevices'
+        })
+    }
+}
+//new devices end
+
+
+//master new devices start
+export const initMasterNewDevices = (add) =>{
+    return (dispatch) =>{
+        dispatch({
+            type:'init_master_newdevices',
+            payload:add
+        })
+    }
+}
+
+export const clearMasterNewDevices = () =>{
+    return (dispatch) =>{
+        dispatch({
+            type:'clear_master_newdevices'
+        })
+    }
+}
+//master new devices end
+
 
 //price start
 export const initPrice = (init)=>{

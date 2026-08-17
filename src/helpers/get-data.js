@@ -27,6 +27,8 @@ export const getData = async (dispatch) => {
     addUpi,
     initBundle,
     initOpenBox,
+    initNewDevices,
+    initMasterNewDevices,
     initSeltrueBox,
     initMasterOpenBox,
     initMasterSeltrueBox,
@@ -55,6 +57,8 @@ export const getData = async (dispatch) => {
     clearAccountMobile,
     clearAccountAddress,
     clearOpenBox,
+    clearNewDevices,
+    clearMasterNewDevices,
     clearSeltrueBox,
     clearMasterOpenBox,
     clearMasterSeltrueBox,
@@ -123,6 +127,21 @@ export const getData = async (dispatch) => {
         const category_id = temp['data']['category_id'];
         const attached_vendor_id = temp['data']['attached_vendor_id'];
         
+
+        GetDeviceListStockType({"stock_type":"NEW","vendor_id":vendor_id},temp['accessToken']).then((Res2)=>{
+          clearNewDevices()
+          clearMasterNewDevices()
+          if(Res2.status == 1){
+            clearBrands()
+            clearGrades()
+            for(var i=0;i<Res2['data'].length;i++){
+              initBrands(Res2['data'][i]['product_brand'])
+              initGrades(Res2['data'][i]['certification_grade'])
+            }
+            initNewDevices((Res2.data).sort((a,b)=>a.device_id.localeCompare(b.device_id)))
+            initMasterNewDevices((Res2.data).sort((a,b)=>a.device_id.localeCompare(b.device_id)))
+          }
+        })
 
         GetDeviceListStockType({"stock_type":"OPEN BOX","vendor_id":vendor_id},temp['accessToken']).then((Res2)=>{
           clearOpenBox()

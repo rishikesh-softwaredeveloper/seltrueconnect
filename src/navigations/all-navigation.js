@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React,{useState, useEffect, useRef } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Alert, Linking, TouchableOpacity, Platform } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Alert, Linking, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import { NavigationContainer, DefaultTheme,useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -30,6 +30,7 @@ import RegistrationScreen from '../screens/login-screens/registration-screen';
 import AccountScreen from '../screens/home-screens/account-screen';
 import BundleScreen from '../screens/home-screens/bundle-screen';
 import OpenBoxScreen from '../screens/home-screens/open-box-screen';
+import NewDevicesScreen from '../screens/home-screens/new-devices-screen';
 import SeltrueBoxScreen from '../screens/home-screens/seltrue-box-screen';
 import BundleListScreen from '../screens/home-screens/bundle-list-screen'
 import BundleCartListScreen from '../screens/home-screens/bundle-cart-list-screen'
@@ -193,6 +194,31 @@ const DrawerRoutes = () => {
             // </View>),
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="package-variant" color={color} size={size} />
+            )
+          }}
+        />
+        :<></>
+      }
+      {
+        dealer[0]?.attached_vendor_id == null || dealer[0]?.attached_vendor_id == '' ?
+        <Tab.Screen
+          name="NewDevicesScreen"
+          component={NewDevicesScreen}
+          options={{
+            tabBarLabel: 'New Devices',
+            ...BottomScreenHeaderOptions,
+            headerTitle:'New Devices',
+            // header:()=>(
+            // <View style={{alignItems:'center',padding:5,backgroundColor:'#1194f6'}}>
+            //   <Searchbar 
+            //     value={search}
+            //     style={{marginTop:40,width:"90%",marginBottom:0}}
+            //     onChangeText={(text) => searchFilterFunction(text)}
+            //     placeholder="Search new devices"
+            //   />
+            // </View>),
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="cellphone-check" color={color} size={size} />
             )
           }}
         />
@@ -430,13 +456,24 @@ const previous = () => {
             component={BundleListScreen} 
             options={{ 
               header:()=>(
-              <View style={{flexDirection:'row',justifyContent:'flex-start',borderBottomWidth:0,paddingBottom:10,marginTop:Platform.OS != 'ios'?36:0,padding:Platform.OS != 'ios'?20:10,backgroundColor:'#1194f6'}}>
+              <>
+              <StatusBar backgroundColor="#1194f6" barStyle="light-content" />
+              <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',borderBottomWidth:0,paddingBottom:10,marginTop:10,padding:Platform.OS != 'ios'?20:10,backgroundColor:'#1194f6'}}>
                 <TouchableOpacity style={{marginLeft:5}} onPress={previous}>
                   <MaterialCommunityIcons name="arrow-left" color={'#ffff'} size={25} />
                 </TouchableOpacity>
                 <Text style={{ textAlign: 'left',marginLeft:"33%" ,fontSize: 20,color:'#ffff' }}>{bundleName}</Text>
               </View>
-              )
+              </>
+               )
+              // header:()=>(
+              // <View style={{flexDirection:'row',justifyContent:'flex-start',borderBottomWidth:0,paddingBottom:10,marginTop:Platform.OS != 'ios'?36:0,padding:Platform.OS != 'ios'?20:10,backgroundColor:'#1194f6'}}>
+              //   <TouchableOpacity style={{marginLeft:5}} onPress={previous}>
+              //     <MaterialCommunityIcons name="arrow-left" color={'#ffff'} size={25} />
+              //   </TouchableOpacity>
+              //   <Text style={{ textAlign: 'left',marginLeft:"33%" ,fontSize: 20,color:'#ffff' }}>{bundleName}</Text>
+              // </View>
+              // )
             }} 
           />
           <Stack.Screen 
@@ -444,13 +481,24 @@ const previous = () => {
             component={BundleCartListScreen} 
             options={{ 
               header:()=>(
-              <View style={{flexDirection:'row',justifyContent:'flex-start',borderBottomWidth:0,paddingBottom:10,marginTop:Platform.OS != 'ios'?36:0,padding:Platform.OS != 'ios'?20:10,backgroundColor:'#1194f6'}}>
+              <>
+              <StatusBar backgroundColor="#1194f6" barStyle="light-content" />
+              <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',borderBottomWidth:0,paddingBottom:10,marginTop:10,padding:Platform.OS != 'ios'?20:10,backgroundColor:'#1194f6'}}>
                 <TouchableOpacity style={{marginLeft:5}} onPress={previous}>
                   <MaterialCommunityIcons name="arrow-left" color={'#ffff'} size={25} />
                 </TouchableOpacity>
                 <Text style={{ textAlign: 'left',marginLeft:"33%" ,fontSize: 20,color:'#ffff' }}>{bundleName}</Text>
               </View>
-              )
+              </>
+               )
+              // header:()=>(
+              // <View style={{flexDirection:'row',justifyContent:'flex-start',borderBottomWidth:0,paddingBottom:10,marginTop:Platform.OS != 'ios'?36:0,padding:Platform.OS != 'ios'?20:10,backgroundColor:'#1194f6'}}>
+              //   <TouchableOpacity style={{marginLeft:5}} onPress={previous}>
+              //     <MaterialCommunityIcons name="arrow-left" color={'#ffff'} size={25} />
+              //   </TouchableOpacity>
+              //   <Text style={{ textAlign: 'left',marginLeft:"33%" ,fontSize: 20,color:'#ffff' }}>{bundleName}</Text>
+              // </View>
+              // )
             }} 
           />
           {/* <Stack.Screen 

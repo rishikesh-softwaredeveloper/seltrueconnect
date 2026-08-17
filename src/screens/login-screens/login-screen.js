@@ -34,6 +34,8 @@ const LoginScreen = () => {
     addPan,
     initBundle,
     initOpenBox,
+    initNewDevices,
+    initMasterNewDevices,
     initSeltrueBox,
     initMasterOpenBox,
     initMasterSeltrueBox,
@@ -59,6 +61,8 @@ const LoginScreen = () => {
     clearAccountMobile,
     clearAccountAddress,
     clearOpenBox,
+    clearNewDevices,
+    clearMasterNewDevices,
     clearSeltrueBox,
     clearMasterOpenBox,
     clearMasterSeltrueBox,
@@ -178,6 +182,21 @@ const LoginScreen = () => {
           const vendor_id = Response.data["vendor_id"];
           const category_id = Response.data['category_id'];
           const attached_vendor_id = Response.data['attached_vendor_id'];
+
+          GetDeviceListStockType({"stock_type":"NEW","vendor_id":vendor_id},Response.accessToken).then((Re)=>{
+            clearNewDevices()
+            clearMasterNewDevices()
+            if(Re.status == 1){
+              clearBrands()
+              clearGrades()
+              for(var i=0;i<Re['data'].length;i++){
+                initBrands(Re['data'][i]['product_brand'])
+                initGrades(Re['data'][i]['certification_grade'])
+              }
+              initNewDevices((Re.data).sort((a,b)=>a.device_id.localeCompare(b.device_id)))
+              initMasterNewDevices((Re.data).sort((a,b)=>a.device_id.localeCompare(b.device_id)))
+            }
+          })
 
           GetDeviceListStockType({ stock_type: "OPEN BOX", vendor_id: vendor_id },Response.accessToken).then((Res2) => {
             clearOpenBox();

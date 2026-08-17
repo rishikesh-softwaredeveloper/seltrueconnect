@@ -5,6 +5,7 @@ import dealerReducer from './dealerReducer'
 import profileReducer from './profileReducer'
 import bundleReducer from './bundleReducer'
 import openBoxReducer from './openBoxReducer'
+import newDevicesReducer from './newDevicesReducer'
 import seltrueBoxReducer from './seltrueBoxReducer'
 import shippingAddressReducer from './shippingAddressReducer'
 import bankAccountsReducer from './bankAccountsReducer'
@@ -13,6 +14,7 @@ import vendorListReducer from './vendorListReducer'
 import salesPersonListReducer from './salesPersonListReducer'
 import voucherDetailsReducer from './voucherDetailsReducer'
 import masterOpenBoxReducer from './masterOpenBoxReducer'
+import masterNewDevicesReducer from './masterNewDevicesReducer'
 import masterSeltrueBoxReducer from './masterSeltrueBoxReducer'
 import AcctNameReducer from './acctNameReducer'
 import AcctEmailReducer from './acctEmailReducer'
@@ -47,8 +49,10 @@ const appReducer = combineReducers({
     profile:profileReducer,
     bundle:bundleReducer,
     openbox:openBoxReducer,
+    newdevices:newDevicesReducer,
     seltruebox:seltrueBoxReducer,
     masteropenbox:masterOpenBoxReducer,
+    masternewdevices:masterNewDevicesReducer,
     masterseltruebox:masterSeltrueBoxReducer,
     AcctName:AcctNameReducer,
     AcctEmail:AcctEmailReducer,
